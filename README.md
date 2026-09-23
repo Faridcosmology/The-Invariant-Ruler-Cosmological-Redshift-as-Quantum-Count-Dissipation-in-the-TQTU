@@ -1,0 +1,1 @@
+# The-Invariant-Ruler-Cosmological-Redshift-as-Quantum-Count-Dissipation-in-the-TQTU
