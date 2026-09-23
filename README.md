@@ -82,6 +82,48 @@ Beyond these, the theorem opens the second front posed by the framework's develo
 Redshift, in the Tanfarid Quantum Thermodynamic Universe, is what a quantum ledger looks like from the outside. The ruler — one FQCU, h × 1 THz, 6.626 × 10−22 joules — never changes; what changes is the count. Expansion, plasma, and entropy gradient each take their cut along the path, exponentially and additively, and the ratio of the emitted count to the observed count is, exactly, one plus the redshift. The formulation yields the Hubble law where the Hubble law is measured, relocates part of the expansion budget where the Hubble tension says something is hiding, and names three observations that can prove it wrong. A century after Zwicky's untimely suggestion, the photon's fatigue has finally been given a unit of account.
 Note on the Standing of TQTU
 TQTU (Farid Cosmology) is a framework proposed and developed by the author; it is not a consensus theory, and this article is an interpretive research communication, not a peer-reviewed validation. Curves in Figure 1(b) are illustrative. Quantitative applications of Eq. (7) to survey data, and the Tolman-test reprocessing computation of Section 7, are announced as program deliverables rather than reported results.
+import numpy as np
+
+# 1. Postulate I: Invariant Scale Baseline
+h = 6.62607015e-34       # J*s
+nu_0 = 1e12              # 1 THz invariant calibration frequency
+E_FQCU = h * nu_0        # ~4.136 meV
+
+# 2. Define the Cosmic Path Parameters (Mpc scale)
+distance_Mpc = 100.0     # Distance to a mock galaxy cluster
+c = 3e8                  # m/s
+H_0_Planck = 67.4        # km/s/Mpc (Base metric expansion rate)
+
+# 3. Simulate Multi-Frequency Observation Bands (eV to keV)
+# Dispersive media impacts different frequencies uniquely
+frequencies_obs = np.array([1.5e14, 3.0e14, 1.5e18]) # Optical to X-ray modes (Hz)
+
+# 4. Integrate the Three Dissipation Channels (Postulate II)
+# Achromatic metric contribution matching standard linear Hubble regime
+tau_expansion = (H_0_Planck / 3e5) * distance_Mpc 
+
+# Dispersive plasma contribution: frequency-dependent attenuation mapping
+# Real plasma introduces a 1/nu^2 scaling to the dissipation coefficient
+plasma_column_Ne = 1e22  # free-electron column density along the sightline
+alpha_plasma = 5e-5      # TQTU plasma coupling factor
+tau_plasma = (alpha_plasma * plasma_column_Ne) / (frequencies_obs / nu_0)**2
+
+# Directional entropy gradient along the line-of-sight
+tau_entropy = 0.012      # Work done against the cosmic filament gradient
+
+# 5. Calculate Total TQTU Redshift Vector
+tau_total = tau_expansion + tau_plasma + tau_entropy
+z_TQTU = np.exp(tau_total) - 1.0
+
+# 6. Evaluate the Mock FQCU Quantum Ledger
+print(f"--- TQTU Cosmological Component Breakdown ---")
+print(f"Achromatic Metric Redshift Contribution: {np.exp(tau_expansion)-1.0:.6f}")
+print(f"Anisotropic Entropic Redshift Contribution: {np.exp(tau_entropy)-1.0:.6f}")
+for i, nu in enumerate(frequencies_obs):
+    print(f"\nObserved Frequency Band {i+1} ({nu:.2e} Hz):")
+    print(f"  -> Dispersive Plasma Depth (tau_P): {tau_plasma[i]:.6e}")
+    print(f"  -> Total Observed Redshift (z_obs): {z_TQTU[i]:.6f}")
+
 References
 1.  Hubble, E., “A Relation between Distance and Radial Velocity among Extra-Galactic Nebulae,” PNAS 15, 168–173, 1929.
 2.  Zwicky, F., “On the Red Shift of Spectral Lines through Interstellar Space,” PNAS 15, 773–779, 1929.
